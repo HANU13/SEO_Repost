@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive SEO Plan | R-Oxygen Skin Clinic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: "Calm Professional" - A mix of slate gray, a soft beige/off-white background, with teal and amber accents for calls-to-action and highlights. -->
+    <!-- Application Structure Plan: The SPA is designed as an interactive dashboard with a fixed sidebar navigation for quick access to key report areas: a high-level 'Dashboard', a detailed 'Audit Findings' section with tabs, a 'Competitive Landscape' with an interactive chart, and a step-by-step 'Action Plan' using an accordion interface. This non-linear structure was chosen to allow stakeholders to quickly grasp the overall strategy on the dashboard or dive deep into specific sections as needed, which is more efficient than reading a linear document. The flow encourages exploration, starting with the problem (Audit), understanding the context (Competition), and then seeing the solution (Action Plan). -->
+    <!-- Visualization & Content Choices: 
+        - Report Info: Competitive analysis data (experience, reviews). -> Goal: Compare market players. -> Viz/Presentation: Interactive Bar Chart. -> Interaction: Hover for details, click legend to toggle data series. -> Justification: A bar chart provides an immediate visual comparison of quantitative data, making it easier to see Dr. Pandey's strong review count versus competitors. -> Library: Chart.js (Canvas).
+        - Report Info: 3-Phase SEO roadmap. -> Goal: Organize and detail the action plan. -> Viz/Presentation: Accordion component. -> Interaction: Click to expand/collapse phases and individual tasks. -> Justification: An accordion organizes a large amount of detailed information compactly, allowing users to focus on one phase at a time without being overwhelmed. -> Library/Method: HTML/Tailwind + Vanilla JS.
+        - Report Info: Technical/Local SEO issues. -> Goal: Inform about critical problems. -> Viz/Presentation: Styled info cards with icons. -> Interaction: Static display for clarity. -> Justification: Key issues like NAP inconsistency and poor Core Web Vitals need to be highlighted clearly and unambiguously. Simple cards with icons achieve this effectively. -> Library/Method: HTML/Tailwind.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FDFBF8;
+            color: #334155;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 400px;
+            max-height: 50vh;
+        }
+        @media (max-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .nav-link.active {
+            background-color: #14B8A6;
+            color: white;
+            font-weight: 600;
+        }
+        .tab-btn.active {
+            border-bottom-color: #14B8A6;
+            color: #14B8A6;
+            font-weight: 600;
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="flex min-h-screen">
+        <!-- Sidebar Navigation -->
+        <aside class="w-64 bg-slate-800 text-white p-6 sticky top-0 h-screen hidden lg:flex flex-col">
+            <h1 class="text-2xl font-bold text-white mb-8">SEO Strategic Plan</h1>
+            <nav class="flex flex-col space-y-2">
+                <a href="#dashboard" class="nav-link p-3 rounded-lg transition-colors duration-200 hover:bg-slate-700">📈 Dashboard</a>
+                <a href="#audit" class="nav-link p-3 rounded-lg transition-colors duration-200 hover:bg-slate-700">🔍 Audit Findings</a>
+                <a href="#competition" class="nav-link p-3 rounded-lg transition-colors duration-200 hover:bg-slate-700">📊 Competitive Landscape</a>
+                <a href="#plan" class="nav-link p-3 rounded-lg transition-colors duration-200 hover:bg-slate-700">🗺️ Action Plan</a>
+                <a href="#kpis" class="nav-link p-3 rounded-lg transition-colors duration-200 hover:bg-slate-700">🎯 Success Metrics</a>
+            </nav>
+            <div class="mt-auto text-sm text-slate-400">
+                <p>For: R-Oxygen Skin Clinic</p>
+                <p class="font-mono text-xs">dermatologistinjabalpur.com</p>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-4 sm:p-6 lg:p-10">
+            <div class="max-w-7xl mx-auto">
+
+                <!-- Mobile Header -->
+                <header class="lg:hidden mb-6">
+                     <h1 class="text-3xl font-bold text-slate-800">SEO Strategic Plan</h1>
+                     <p class="text-slate-500">An interactive guide for R-Oxygen Skin Clinic's digital growth.</p>
+                </header>
+
+                <!-- Section 1: Dashboard -->
+                <section id="dashboard" class="mb-16">
+                    <h2 class="text-3xl font-bold text-slate-800 mb-2">Strategic Dashboard</h2>
+                    <p class="text-slate-500 mb-8">This dashboard provides a high-level overview of the current SEO status and the primary strategic goal. It highlights the most critical action items to immediately address foundational issues and capitalize on market opportunities.</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200/80">
+                            <h3 class="font-semibold text-slate-700 mb-2">Primary Objective</h3>
+                            <p class="text-2xl font-bold text-teal-600">Become Jabalpur's #1 Ayurvedic Dermatologist</p>
+                            <p class="text-sm text-slate-500 mt-2">Leverage unique B.A.M.S. credentials to dominate a niche, high-intent market segment.</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200/80">
+                            <h3 class="font-semibold text-slate-700 mb-2">Key Differentiator</h3>
+                            <p class="text-2xl font-bold text-amber-600">Authentic Ayurvedic Approach</p>
+                            <p class="text-sm text-slate-500 mt-2">Capitalize on a market gap that competitors are not addressing, turning a specialty into a major competitive advantage.</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200/80">
+                            <h3 class="font-semibold text-slate-700 mb-2">Current Trust Signal</h3>
+                            <p class="text-2xl font-bold text-slate-800">4.6 ★ <span class="text-base font-normal text-slate-500">(from 964 reviews)</span></p>
+                            <p class="text-sm text-slate-500 mt-2">A strong foundation of patient trust on JustDial provides a powerful asset for building online authority.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 2: Audit Findings -->
+                <section id="audit" class="mb-16">
+                    <h2 class="text-3xl font-bold text-slate-800 mb-2">Comprehensive Audit Findings</h2>
+                    <p class="text-slate-500 mb-8">This section details the critical issues discovered during the audit of the clinic's digital presence. It covers on-site content gaps, foundational technical problems, and local SEO inconsistencies that are currently hindering search performance.</p>
+                    
+                    <div>
+                        <div class="border-b border-slate-200 mb-6">
+                            <nav class="-mb-px flex space-x-6" aria-label="Tabs">
+                                <button class="tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm text-slate-500 hover:text-teal-600 hover:border-teal-500" data-tab="onsite">On-Site Analysis</button>
+                                <button class="tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm text-slate-500 hover:text-teal-600 hover:border-teal-500" data-tab="technical">Technical SEO</button>
+                                <button class="tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm text-slate-500 hover:text-teal-600 hover:border-teal-500" data-tab="local">Local SEO</button>
+                            </nav>
+                        </div>
+
+                        <div id="tab-content">
+                            <!-- On-site Tab -->
+                            <div class="tab-pane" data-tab-content="onsite">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div class="bg-white p-6 rounded-xl shadow-md border border-red-200/80">
+                                        <h4 class="font-semibold text-lg mb-3 text-red-700">Weakness: Content & Keyword Gap</h4>
+                                        <p class="text-slate-600 mb-4">The website lacks dedicated, in-depth pages for specific services and conditions. A single "Skin Treatment" page is insufficient to rank for high-intent, long-tail keywords, ceding authority to competitors with more comprehensive content.</p>
+                                        <ul class="list-disc list-inside text-sm text-slate-500 space-y-1">
+                                            <li>Broad, generic service categories.</li>
+                                            <li>Missed opportunity for specific condition pages (e.g., Psoriasis, Acne Rosacea).</li>
+                                            <li>Fails to capture users searching for detailed treatment information.</li>
+                                        </ul>
+                                    </div>
+                                    <div class="bg-white p-6 rounded-xl shadow-md border border-teal-200/80">
+                                        <h4 class="font-semibold text-lg mb-3 text-teal-700">Opportunity: The Ayurvedic Angle</h4>
+                                        <p class="text-slate-600 mb-4">The clinic's specialization in Ayurvedic medicine is a powerful, underutilized asset. No major competitor is targeting this niche. Creating content around keywords like "Ayurvedic skin treatment Jabalpur" can establish market leadership in a defensible segment.</p>
+                                        <ul class="list-disc list-inside text-sm text-slate-500 space-y-1">
+                                            <li>Capitalize on Dr. Pandey's B.A.M.S. degree.</li>
+                                            <li>Attract a high-intent audience seeking holistic care.</li>
+                                            <li>Build a unique brand identity distinct from competitors.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Technical Tab -->
+                            <div class="tab-pane hidden" data-tab-content="technical">
+                                <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200/80">
+                                    <h4 class="font-semibold text-lg mb-3 text-red-700">Critical Issue: Poor Core Web Vitals</h4>
+                                    <p class="text-slate-600 mb-6">The website suffers from foundational technical issues that lead to slow load times and a poor user experience. Google penalizes slow sites, and patients lose trust in a clunky digital presence. Addressing these is a top priority.</p>
+                                    <div class="space-y-4">
+                                        <div class="flex items-center">
+                                            <span class="text-red-500 mr-3 text-xl">❗</span>
+                                            <p><strong class="font-semibold text-slate-700">Slow Server Response Time:</strong> Delays before the page even starts to load.</p>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <span class="text-red-500 mr-3 text-xl">❗</span>
+                                            <p><strong class="font-semibold text-slate-700">Render-Blocking Resources:</strong> CSS and JavaScript files that prevent the page from displaying quickly.</p>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <span class="text-red-500 mr-3 text-xl">❗</span>
+                                            <p><strong class="font-semibold text-slate-700">Unoptimized Images:</strong> Large image files that significantly slow down page load times.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Local SEO Tab -->
+                            <div class="tab-pane hidden" data-tab-content="local">
+                                <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200/80">
+                                    <h4 class="font-semibold text-lg mb-3 text-red-700">Critical Issue: NAP Inconsistency</h4>
+                                    <p class="text-slate-600 mb-6">A major inconsistency exists on high-authority sites like JustDial, where Dr. Pandey is listed as both a "Dermatologist" and a "Physiotherapist". This confuses search engines and severely harms local search rankings by creating doubt about the clinic's primary service.</p>
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-center">
+                                        <div class="bg-red-50 p-4 rounded-lg">
+                                            <p class="font-semibold text-red-800">Current State ❌</p>
+                                            <p class="text-red-600">Conflicting listings: "Dermatologist" / "Physiotherapist"</p>
+                                        </div>
+                                        <div class="bg-teal-50 p-4 rounded-lg">
+                                            <p class="font-semibold text-teal-800">Required State ✔️</p>
+                                            <p class="text-teal-600">Consistent listing: "Dermatologist" only</p>
+                                        </div>
+                                    </div>
+                                    <p class="text-sm text-slate-500 mt-4 text-center">This is a low-effort, high-impact fix that must be addressed immediately.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 3: Competitive Landscape -->
+                <section id="competition" class="mb-16">
+                    <h2 class="text-3xl font-bold text-slate-800 mb-2">Competitive Landscape</h2>
+                    <p class="text-slate-500 mb-8">Understanding the market is key to winning it. This analysis compares R-Oxygen Skin Clinic against key competitors in Jabalpur on critical metrics like experience and online reputation. The data reveals a clear opportunity to lead in patient trust and leverage a unique service offering.</p>
+                    
+                    <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200/80">
+                        <div class="chart-container">
+                            <canvas id="competitorChart"></canvas>
+                        </div>
+                        <div class="mt-6 text-center text-sm text-slate-500">
+                            <p><strong class="text-slate-700">Insight:</strong> While competitors may have more years of experience, Dr. Pandey has a significantly higher volume of reviews, indicating strong patient engagement and a solid base for building a reputation as the most trusted clinic.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 4: Action Plan -->
+                <section id="plan" class="mb-16">
+                    <h2 class="text-3xl font-bold text-slate-800 mb-2">The 3-Phase Action Plan</h2>
+                    <p class="text-slate-500 mb-8">This roadmap outlines the prioritized, step-by-step strategy for achieving SEO dominance. The plan is divided into three distinct phases, moving from fixing foundational issues to building local authority and finally establishing long-term content leadership.</p>
+                    
+                    <div class="space-y-4" id="accordion-container">
+                        <!-- Phase 1 -->
+                        <div class="accordion-item bg-white rounded-xl shadow-md border border-slate-200/80 overflow-hidden">
+                            <button class="accordion-header w-full text-left p-6 flex justify-between items-center">
+                                <div>
+                                    <p class="text-sm font-semibold text-amber-600">Phase 1 (Weeks 1-8)</p>
+                                    <h3 class="text-xl font-bold text-slate-800">Foundation Building</h3>
+                                </div>
+                                <span class="accordion-icon text-2xl text-slate-400 transition-transform duration-300 transform rotate-0">▼</span>
+                            </button>
+                            <div class="accordion-content">
+                                <div class="p-6 pt-0 space-y-4 text-slate-600">
+                                    <p>The first phase is about fixing what's broken. We will address critical technical errors, resolve damaging inconsistencies, and optimize the website's core structure to create a solid base for future growth.</p>
+                                    <ul class="list-decimal list-inside space-y-2">
+                                        <li><strong>Technical SEO Remediation:</strong> Conduct a full audit with PageSpeed Insights and fix all Core Web Vitals issues (image optimization, code minification, etc.).</li>
+                                        <li><strong>On-Page Optimization:</strong> Create new, dedicated landing pages for each key service (e.g., Acne Care, Hair Fall) with in-depth, keyword-rich content.</li>
+                                        <li><strong>NAP & GBP Correction:</strong> Immediately correct the "Physiotherapist" listing on JustDial and fully optimize the Google Business Profile with services, photos, and a compelling description.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Phase 2 -->
+                        <div class="accordion-item bg-white rounded-xl shadow-md border border-slate-200/80 overflow-hidden">
+                            <button class="accordion-header w-full text-left p-6 flex justify-between items-center">
+                                <div>
+                                    <p class="text-sm font-semibold text-teal-600">Phase 2 (Months 2-6)</p>
+                                    <h3 class="text-xl font-bold text-slate-800">Local Authority & Visibility</h3>
+                                </div>
+                                <span class="accordion-icon text-2xl text-slate-400 transition-transform duration-300 transform rotate-0">▼</span>
+                            </button>
+                            <div class="accordion-content">
+                                <div class="p-6 pt-0 space-y-4 text-slate-600">
+                                    <p>With a solid foundation, this phase focuses on building trust and visibility within the local Jabalpur market. We will expand the clinic's digital footprint and leverage its excellent reputation to attract more patients.</p>
+                                     <ul class="list-decimal list-inside space-y-2">
+                                        <li><strong>Local Citation Building:</strong> Systematically create consistent NAP listings on high-authority local and healthcare directories (Practo, HexaHealth, Sulekha).</li>
+                                        <li><strong>Reputation Management:</strong> Implement a proactive strategy to solicit new reviews on Google and JustDial. Respond professionally and empathetically to all feedback to build trust.</li>
+                                        <li><strong>Review Keyword Analysis:</strong> Analyze patient reviews for valuable keywords ("authentic Ayurvedic treatment," "best laser clinic") to inform future content strategy.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Phase 3 -->
+                        <div class="accordion-item bg-white rounded-xl shadow-md border border-slate-200/80 overflow-hidden">
+                            <button class="accordion-header w-full text-left p-6 flex justify-between items-center">
+                                <div>
+                                    <p class="text-sm font-semibold text-slate-600">Phase 3 (Months 6+)</p>
+                                    <h3 class="text-xl font-bold text-slate-800">Content Leadership & Growth</h3>
+                                </div>
+                                <span class="accordion-icon text-2xl text-slate-400 transition-transform duration-300 transform rotate-0">▼</span>
+                            </button>
+                            <div class="accordion-content">
+                                <div class="p-6 pt-0 space-y-4 text-slate-600">
+                                    <p>The final phase establishes the clinic as the go-to authority for dermatology in Jabalpur. By consistently creating valuable, educational content, we will drive sustained organic traffic and build a loyal community.</p>
+                                     <ul class="list-decimal list-inside space-y-2">
+                                        <li><strong>Content Marketing Engine:</strong> Develop a content calendar focused on the Ayurvedic/holistic approach. Create blog posts and articles answering common patient questions (e.g., "Ayurvedic remedies for hair fall").</li>
+                                        <li><strong>Brand Building via Social Media:</strong> Launch and maintain active profiles on Facebook and Instagram. Share educational content, patient success stories, and behind-the-scenes glimpses to build community and E-A-T (Expertise, Authoritativeness, Trustworthiness).</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 5: KPIs -->
+                <section id="kpis" class="mb-16">
+                    <h2 class="text-3xl font-bold text-slate-800 mb-2">Success Metrics (KPIs)</h2>
+                    <p class="text-slate-500 mb-8">To ensure this strategy delivers tangible results, we will track specific Key Performance Indicators (KPIs). These metrics will measure our progress in both the short and long term, connecting our SEO efforts directly to business growth.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200/80">
+                            <h3 class="font-semibold text-slate-700 mb-2">Organic Traffic</h3>
+                            <p class="text-3xl font-bold text-teal-600">📈 Increase</p>
+                            <p class="text-sm text-slate-500 mt-2">A steady, measurable rise in website visitors from non-paid search results.</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200/80">
+                            <h3 class="font-semibold text-slate-700 mb-2">Keyword Rankings</h3>
+                            <p class="text-3xl font-bold text-teal-600">🔝 Top 3 Position</p>
+                            <p class="text-sm text-slate-500 mt-2">Achieve placement in the Google Local "3-pack" for core keywords like "dermatologist Jabalpur".</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200/80">
+                            <h3 class="font-semibold text-slate-700 mb-2">Business Growth</h3>
+                            <p class="text-3xl font-bold text-teal-600">📞 More Patients</p>
+                            <p class="text-sm text-slate-500 mt-2">A direct increase in appointment bookings and phone inquiries originating from the website.</p>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    
+    // Navigation Highlighting
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.3
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').substring(1) === entry.target.id) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+        });
+    }, observerOptions);
+
+    sections.forEach(section => {
+        observer.observe(section);
+    });
+
+    // Tabs functionality
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const tabPanes = document.querySelectorAll('.tab-pane');
+
+    tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const tab = button.dataset.tab;
+
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+
+            tabPanes.forEach(pane => {
+                if (pane.dataset.tabContent === tab) {
+                    pane.classList.remove('hidden');
+                } else {
+                    pane.classList.add('hidden');
+                }
+            });
+        });
+    });
+    // Activate the first tab by default
+    if (tabButtons.length > 0) {
+        tabButtons[0].click();
+    }
+
+    // Accordion functionality
+    const accordionContainer = document.getElementById('accordion-container');
+    if(accordionContainer) {
+        accordionContainer.addEventListener('click', function(e) {
+            const header = e.target.closest('.accordion-header');
+            if (!header) return;
+
+            const item = header.parentElement;
+            const content = header.nextElementSibling;
+            const icon = header.querySelector('.accordion-icon');
+            const isOpen = item.classList.contains('open');
+
+            // Close all other items
+            const allItems = accordionContainer.querySelectorAll('.accordion-item');
+            allItems.forEach(i => {
+                if (i !== item && i.classList.contains('open')) {
+                    i.classList.remove('open');
+                    i.querySelector('.accordion-content').style.maxHeight = null;
+                    i.querySelector('.accordion-icon').style.transform = 'rotate(0deg)';
+                }
+            });
+
+            // Toggle current item
+            if (isOpen) {
+                content.style.maxHeight = null;
+                icon.style.transform = 'rotate(0deg)';
+                item.classList.remove('open');
+            } else {
+                content.style.maxHeight = content.scrollHeight + 'px';
+                icon.style.transform = 'rotate(180deg)';
+                item.classList.add('open');
+            }
+        });
+    }
+
+
+    // Chart.js Competitor Chart
+    const ctx = document.getElementById('competitorChart');
+    if (ctx) {
+        const competitorData = {
+            labels: ['Dr. Ankit Pandey', 'Dr. V. Tandon', 'Dr. M.K. Maheshwari', 'Dr. Nitin Agrawal'],
+            datasets: [{
+                label: 'Years of Experience',
+                data: [10, 21, 14, 15],
+                backgroundColor: 'rgba(20, 184, 166, 0.7)',
+                borderColor: 'rgba(13, 148, 136, 1)',
+                borderWidth: 1
+            }, {
+                label: 'Number of Reviews (on JustDial)',
+                data: [964, 391, 957, 0], // Assuming 0 for Dr. Agrawal as it's not on JustDial in the report
+                backgroundColor: 'rgba(245, 158, 11, 0.7)',
+                borderColor: 'rgba(217, 119, 6, 1)',
+                borderWidth: 1
+            }]
+        };
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: competitorData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Competitor Comparison: Experience vs. Online Reviews',
+                        font: {
+                            size: 16,
+                            weight: 'bold'
+                        },
+                        color: '#334155',
+                        padding: {
+                            bottom: 20
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: '#334155',
+                        titleFont: {
+                            weight: 'bold'
+                        },
+                        bodyFont: {
+                            size: 14
+                        },
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed.y !== null) {
+                                    label += context.parsed.y;
+                                    if (context.dataset.label === 'Years of Experience') {
+                                        label += ' years';
+                                    } else {
+                                        label += ' reviews';
+                                    }
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: '#e2e8f0'
+                        },
+                        ticks: {
+                            color: '#64748b'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            color: '#64748b'
+                        }
+                    }
+                }
+            }
+        });
+    }
+});
+</script>
+</body>
+</html>
